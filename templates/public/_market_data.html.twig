@@ -20,6 +20,7 @@
                                 <th>Price</th>
                                 <th>24h % change</th>
                                 <th>24h volume</th>
+                                <th>Graph</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +48,7 @@
                                         {% endif %}
                                     </td>
                                     <td>{{ pl.total_volume | number_format(0,'.', ',') }}</td>
-                                    
+                                    <td></td>
                                 </tr>
                             {% endfor %}
                         </tbody>
