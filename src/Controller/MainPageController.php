@@ -18,7 +18,7 @@ class MainPageController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Post::class);
         
         //get latest crypto news
-        $latestCryptoNews = $repository->findBycategory(1, 0, 6);
+        $latestCryptoNews = $repository->findBycategory(1,0,12);
 
         //get coins price data
 

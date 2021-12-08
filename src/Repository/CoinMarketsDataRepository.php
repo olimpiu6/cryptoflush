@@ -30,8 +30,8 @@ class CoinMarketsDataRepository extends ServiceEntityRepository
             LIMIT '. $offset .', ' . $limit;
 
             $stmt = $this->con->prepare($sql);
-            $stmt->execute();
-            $result = $stmt->fetchAll();
+            $obj = $stmt->execute();
+            $result = $obj->fetchAllAssociative();
 
         }catch(\Exception $e){
             $result = false;

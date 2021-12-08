@@ -37,8 +37,9 @@ class PostRepository extends ServiceEntityRepository{
                      LIMIT '. $limit .', ' . $offset;
 
         $stmt = $this->con->prepare($sql);
-        $stmt->execute([':category_id' => $category_id]);
-        $result = $stmt->fetchAll();
+        $obj = $stmt->execute([':category_id' => $category_id]);
+
+        $result = $obj->fetchAllAssociative();
 
         return $result;
         /*return $this->createQueryBuilder('p')
@@ -61,8 +62,8 @@ class PostRepository extends ServiceEntityRepository{
             LIMIT '. $limit .', ' . $offset;
 
             $stmt = $this->con->prepare($sql);
-            $stmt->execute([':utl' => $not_included, ':active'=>1]);
-            $result = $stmt->fetchAll();
+            $obj = $stmt->execute([':utl' => $not_included, ':active'=>1]);
+            $result = $obj->fetchAllAssociative();
 
         }catch(\Exception $e){
             $result = false;
