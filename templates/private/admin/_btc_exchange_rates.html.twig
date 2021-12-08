@@ -1,0 +1,130 @@
+{% extends 'private/admin/admin_base.html.twig' %}
+{% block page_content %}
+    <div class="col-md-12">
+        <h2><i class="fab fa-btc"></i> BTC exchange rates</h2>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-outline-dark btn-lg btn-block ajax-action" data-action="btcrates-manual-check" data-token="{{ user_token }}" data-dat="1">
+            <i class="fab fa-btc"></i> Manually update rates
+        </button>
+        <hr>
+    </div>
+
+    {# flash messages for form submission, mostlys #}
+    {% for label, messages in app.flashes(['success', 'warning']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {# add new rss feed frm #}
+    <div class="col-md-12">
+    <h4>Add new BTC rates url</h4>
+        {{ form(form) }}
+    </div>
+     {# list all btc rates url #}
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <h4>BTC rates url</h4>
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Url</th>
+                        <th>Active</th>
+                        <th>Edit</th>
+                        <th>Disable</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rates in rates_url %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ rates.name }}</td>
+                        <td>
+                            <small><a href="{{ rates.url }}" target="_blank">{{ rates.url }}</a></small>
+                        </td>
+                        <td>
+                            {% if rates.active == 1  %}
+                                <span class="badge badge-success">active</span>
+                            {% elseif feed.active == 0 %}
+                                <span class="badge badge-danger">disabled</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-success rss_ed" data-id="{{ rates.id }}" data-action="edit">
+                                Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning rss_ed" data-id="{{ rates.id }}" data-action="dis">
+                                {% if rates.active == 1  %}
+                                    Disable
+                                {% elseif rates.active == 0 %}
+                                    Enable
+                                {% endif %}
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger rss_ed" data-id="{{ rates.id }}" data-action="delete">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    {# list all btc rates #}
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <h4>BTC rates list</h4>
+            <table class="table">
+                <thead class="thead-light table-striped">
+                    <tr>
+                        <th>#</th>
+                        <th>Symbol</th>
+                        <th>Unit</th>
+                        <th>Name</th>
+                        <th>Value</th>
+                        <th>Type</th>
+                        <th>Disable</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for rt in rate %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ rt.symbol }}</td>
+                        <td>{{ rt.unit }}</td>
+                        <td>{{ rt.name }}</td>
+                        <td>{{ rt.value }}</td>
+                        <td>{{ rt.type }}</td>
+                        <td>
+                            <button class="btn btn-success rss_ed" data-id="{{ rt.id }}" data-action="edit">
+                                Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger rss_ed" data-id="{{ rt.id }}" data-action="delete">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

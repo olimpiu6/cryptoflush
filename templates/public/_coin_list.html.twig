@@ -1,0 +1,58 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+{% include '/public/_main_menu.html.twig' %}
+
+{# coin list #}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <h1>Coin prices list</h1>
+                    {#{ dump(price_list) }#}
+                    <table class="table table-striped table-dark table-sm" id="coin_price_list">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Name</th>
+                                <th>Price</th>
+                                <th>Market cap.</th>
+                                <th>24h volume</th>
+                                <th>24h change</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for pl in price_list %}
+                                <tr>
+                                    <td>{{ loop.index }}</td>
+                                    <td>{{ pl.name }}</td>
+                                    <td>{# format number bigger than 0 #}
+                                        {% if pl.rawData['usd'] > 0 %}
+                                            {{ pl.rawData['usd'] | number_format(2,'.', ',') }}
+                                        {% else %}
+                                            {{ pl.rawData['usd'] }}
+                                        {% endif %}
+                                    </td>
+                                    <td>{{ pl.marketCap | number_format(2,'.', ',') }}</td>
+                                    <td>{{ pl.dayVolume | number_format(2,'.', ',') }}</td>
+                                    <td>
+                                        <span class="change_perc">
+                                            {{ pl.dayChange | number_format(2,'.', ',') }}
+                                        </span>%
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block jsplugins %}
+    <script src="{{ asset('js/plugin/datatables/datatables.js') }}"></script>
+{% endblock %}

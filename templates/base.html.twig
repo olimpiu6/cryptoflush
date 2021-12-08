@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+    <head>
+
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>{% block title %}Crypto News{% endblock %}</title>
+        {% block metatags %}{% endblock %}
+        {# Run `composer require symfony/webpack-encore-bundle`
+           and uncomment the following Encore helpers to start using Symfony UX #}
+        {% block stylesheets %}
+            <link href="{{ asset('css/bootstrap/bootstrap.min.css') }}" rel="stylesheet"/>
+
+            <link rel="preconnect" href="https://fonts.googleapis.com">
+            <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+            <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
+            
+            {% block cssplugins %}{% endblock %}
+
+            <link href="{{ asset('css/global.css') }}" rel="stylesheet"/>
+        {% endblock %}
+       
+        {% block analitycs %}{% endblock %}
+
+    </head>
+    <body>
+
+        {% block body %}
+            {% block pageheader %}{% endblock %}
+        {% endblock %}
+
+        {% block javascripts %}
+            <script src="{{ asset('js/jquery.js') }}"></script>
+            <script src="{{ asset('js/popper.js') }}"></script>
+            <script src="{{ asset('js/bootstrap.min.js') }}"></script>
+
+            {% block jsplugins %}{% endblock %}
+
+            <script src="{{ asset('js/global.js') }}"></script>
+        {% endblock %}
+
+    </body>
+</html>

@@ -1,0 +1,91 @@
+{% extends 'private/admin/admin_base.html.twig' %}
+{% block page_content %}
+    <div class="col-md-12">
+        <h2><i class="fas fa-rss"></i> RSS Manager</h2>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-outline-dark btn-lg btn-block ajax-action" data-action="rss-manual-check" data-token="{{ user_token }}" data-dat="1">
+            <i class="fas fa-rss"></i> Manually check rss news
+        </button>
+        <hr>
+    </div>
+
+    {# flash messages for form submission, mostly #}
+    {% for label, messages in app.flashes(['success', 'warning']) %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    {# add new rss feed frm #}
+    <div class="col-md-12">
+    <h4>Add new RSS feed</h4>
+        {{ form(form) }}
+    </div>
+
+    {# list all rss feeds #}
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Url</th>
+                        <th>Lang</th>
+                        <th>Active</th>
+                        <th>Edit</th>
+                        <th>Disable</th>
+                        <th>Delete</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for feed in feed_list %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ feed.name }}</td>
+                        <td>
+                            <small><a href="{{ feed.url }}" target="_blank">{{ feed.url }}</a></small>
+                        </td>
+                        <td>
+                            {{ feed.lang }}
+                        </td>
+                        <td>
+                            {% if feed.active == 1  %}
+                                <span class="badge badge-success">active</span>
+                            {% elseif feed.active == 0 %}
+                                <span class="badge badge-danger">disabled</span>
+                            {% endif %}
+                        </td>
+                        <td>
+                            <button class="btn btn-success rss_ed" data-id="{{ feed.id }}" data-action="edit">
+                                Edit
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-warning rss_ed" data-id="{{ feed.id }}" data-action="dis">
+                                {% if feed.active == 1  %}
+                                    Disable
+                                {% elseif feed.active == 0 %}
+                                    Enable
+                                {% endif %}
+                            </button>
+                        </td>
+                        <td>
+                            <button class="btn btn-danger rss_ed" data-id="{{ feed.id }}" data-action="delete">
+                                Delete
+                            </button>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

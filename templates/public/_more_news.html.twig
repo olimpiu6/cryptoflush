@@ -1,0 +1,39 @@
+{# news list #}
+{% if more_cryptonews %}
+    <div class="more_news">
+        <div class="container">
+            <div class="row">
+            <h3 class="more_news_head">More news</h3>
+            {% for mcrt in more_cryptonews %}
+                <div class="col-md-12">
+                    <div class="news_flash">
+                        <h2>
+                            <a href="/news/{{ mcrt.utl }}">{{ mcrt.title }}</a>
+                        </h2>
+
+                        <div class="ct_news">
+                            {{  mcrt.content | slice(0, 150) | raw}}...
+                        </div>
+
+                        <div class="feed_lk">
+                            <p>
+                                <span class="feed_lk_mens">News feed kindly provided by:</span>
+                                <a href="{{ mcrt.feed_link }}" target="_blank" class="feed_href" rel="nofollow">
+                                    {{ mcrt.feed_link }}
+                                </a>
+                            </p>
+                        </div>
+
+                        <div class="pub_date">
+                            <span class="float-right date_span">
+                                {{ mcrt.publish_date | date("m/d/Y") }}
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            {% endfor %}
+            </div>
+        </div>
+    </div>
+{% endif %}

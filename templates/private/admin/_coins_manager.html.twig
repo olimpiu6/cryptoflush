@@ -1,0 +1,42 @@
+{% extends 'private/admin/admin_base.html.twig' %}
+{% block page_content %}
+    <div class="col-md-12">
+        <h2><i class="fab fa-bitcoin"></i> Coin list</h2>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-outline-dark btn-lg btn-block ajax-action" data-action="coin-manual-check" data-token="{{ user_token }}" data-dat="1">
+            <i class="fab fa-bitcoin"></i> Manually check coin list
+        </button>
+        <hr>
+    </div>
+   
+
+    {# list all rss coins #}
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Symbol</th>
+                        <th>Ticker</th>
+                        <th>Platform</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for coin in coin_list %}
+                    <tr>
+                        <td>{{ loop.index }}</td>
+                        <td>{{ coin.name }}</td>
+                        <td>{{ coin.symbol }}</td>
+                        <td>{{ coin.id_ticker }}</td>
+                        <td class="platfr" data-platform="{{ coin.platform }}"></td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,29 @@
+<div class="doge_flash">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2>Latest Dogecoin news</h2>
+            </div>
+            {# news list #}
+            {% for dg in dogenews %}
+                <div class="col-md-4">
+                    <div class="news_flash">
+                        <h2>
+                            <a href="news/{{ dg.url }}">{{ dg.title }}</a>
+                        </h2>
+
+                        <div class="ct_news">
+                            {{ dg.content | raw}}
+                        </div>
+                        <div class="pub_date">
+                            <span class="float-right date_span">
+                                {{ dg.publishDate | date("m/d/Y") }}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+</div>

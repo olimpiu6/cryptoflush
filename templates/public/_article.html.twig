@@ -1,0 +1,36 @@
+{#{ dump(news) }#}
+
+<div class="container">
+    <div class="row">
+        <div class="col article_sg">
+            {% if news[0].title is defined %}
+                <h1 class="art_h1">{{ news[0].title }}</h1>
+            {% endif %}
+
+            {% if news[0].title is defined %}
+                <div class="art_ct">{{ news[0].content | raw }}</div>
+            {% endif %}
+
+            {% if news[0].feedLink is defined %}
+                <div class="feed_lk">
+                    <p>
+                        <span class="feed_lk_mens">News feed kindly provided by:</span>
+                        <a href="{{ news[0].feedLink }}" target="_blank" class="feed_href" rel="nofollow">
+                            {{ news[0].feedLink }}
+                        </a>
+                    </p>
+                </div>
+            {% endif %}
+
+            {% if news[0].publishDate is defined %}
+                <div class="pub_date">
+                    <span class="float-right date_span">
+                        {{ news[0].publishDate | date("m/d/Y") }}
+                    </span>
+                </div>
+            {% endif %}
+            
+        </div>
+    </div>
+</div>
+

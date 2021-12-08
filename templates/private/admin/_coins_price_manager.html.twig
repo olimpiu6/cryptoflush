@@ -1,0 +1,54 @@
+{% extends 'private/admin/admin_base.html.twig' %}
+{% block page_content %}
+    <div class="col-md-12">
+        <h2><i class="fas fa-search-dollar"></i> Coins prices</h2>
+        <hr>
+    </div>
+    <div class="col-md-12">
+        <button class="btn btn-outline-dark btn-lg btn-block ajax-action" data-action="update-coin-price" data-token="{{ user_token }}" data-dat="1">
+            <i class="fas fa-search-dollar"></i> Manually check coin list
+        </button>
+        <hr>
+    </div>
+   
+
+    {# list all rss coins #}
+    <div class="col-md-12">
+        <div class="table-responsive">
+            <table class="table">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>#</th>
+                        <th>Name</th>
+                        <th>Price</th>
+                        <th>Market cap.</th>
+                        <th>24h volume</th>
+                        <th>24h change</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pl in price_list %}
+                        <tr>
+                            <td>{{ loop.index }}</td>
+                            <td>{{ pl.name }}</td>
+                            <td>{# format number bigger than 0 #}
+                                {% if pl.rawData['usd'] > 0 %}
+                                    {{ pl.rawData['usd'] | number_format(2,'.', ',') }}
+                                {% else %}
+                                    {{ pl.rawData['usd'] }}
+                                {% endif %}
+                            </td>
+                            <td>{{ pl.marketCap | number_format(2,'.', ',') }}</td>
+                            <td>{{ pl.dayVolume | number_format(2,'.', ',') }}</td>
+                            <td>
+                                <span class="change_perc">
+                                    {{ pl.dayChange | number_format(2,'.', ',') }}
+                                </span>%
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+{% endblock %}

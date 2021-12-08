@@ -1,0 +1,53 @@
+{% extends 'base.html.twig' %}
+
+{% block cssplugins %}
+    <link href="{{ asset('js/plugin/datatables/datatables.css') }}" rel="stylesheet"/>
+{% endblock %}
+
+{% block title %} Bitcoin exchange rates {% endblock %}
+
+{% block body %}
+
+{% include '/public/_main_menu.html.twig' %}
+
+{# list all btc rates #}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="table-responsive">
+                    <h4>BTC rates list</h4>
+                    <table class="table table-striped table-dark table-sm" id="btc_rates_list">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>Symbol</th>
+                                <th>Name</th>
+                                <th>Value</th>
+                                <th>Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for rt in rates %}
+                            <tr>
+                                <td>{{ loop.index }}</td>
+                                <td>{{ rt.symbol }}</td>
+                                <td>{{ rt.name }}</td>
+                                <td>
+                                    <strong>{{ rt.value |number_format(2, ',', '.') }}</strong> {{ rt.unit }}
+                                </td>
+                                <td>{{ rt.type }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
+
+
+{% block jsplugins %}
+    <script src="{{ asset('js/plugin/datatables/datatables.js') }}"></script>
+{% endblock %}

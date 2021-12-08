@@ -1,0 +1,19 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Crypto News home page{% endblock %}
+
+{% block body %}
+    {% include '/public/_main_menu.html.twig' %}
+
+    {% block pageheader %}
+        <div class="container-fluid homepage-header">
+            <div class="container">
+                <div class="row">
+                    <h4>cabecera inicio</h4>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    {% include '/public/_home_latest_crypto_news.html.twig' %}
+{% endblock %}

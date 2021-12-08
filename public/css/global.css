@@ -1,0 +1,111 @@
+body{
+    background-color: #12141d;
+    color:#fff;
+    font-family: 'Raleway', sans-serif;
+}
+a{
+    color:#607D8B;
+}
+.login-frm{
+    padding:20px;
+    border:1px solid #20222e;
+    width: 80%;
+    max-width:500px;
+    position:absolute;
+    top:0;
+    right:0;
+    bottom:0;
+    left:0;
+    margin:auto;
+    border-radius:5px;
+    height: 350px;  
+}
+.news_flash{
+    padding:10px;
+    border: 1px solid #292a32;
+    background-color: #080a0e;
+    display:block;
+    overflow:hidden;
+    margin-bottom: 10px;
+    box-shadow:1px 1px 1px #07080a;
+}
+.news_flash h2{
+    font-size: 1.5em;
+}
+.news_flash h2 a{
+    color: #3ccf90;
+}
+.news_flash img{
+    max-height: 100px !important;
+    max-width: 100px !important;
+    float:left;
+    margin-right: 15px !important;    
+}
+.doge_flash{
+    padding:20px 0;
+    display:block;
+    overflow:hidden;
+    width:100%;
+}
+#menu_main{
+    background-color:#07080a;
+    color:#fff;
+    border-bottom: 2px solid #20222e;
+}
+#menu_main a{
+    color:#fff;
+
+}
+.date_span{
+    color: #ff6e6e ;
+    font-size: 0.8em;
+}
+.art_h1{
+    font-size:1.5em;
+}
+.article_sg{
+    margin-top: 3em;
+    border: 1px solid #292a32;
+    background-color: #080a0e;
+}
+.art_h1{
+    color: #3ccf90;
+    padding: 10px 0;
+}
+.feed_lk{
+    display:block;
+    clear: both;
+    font-size:0.8em;
+    padding: 10px;
+    background-color: #20222e;
+    margin:1.1em 0 0 0;
+}
+.feed_lk_mens{
+    display:block;
+    clear: both;
+    color:#ddd;
+}
+.feed_href{
+    display:block;
+    clear: both;
+}
+.more_news{
+    padding:2.5em 0;
+}
+.more_news_head{
+    border-bottom: 2px solid #e86847;
+    clear:both;
+    display:block;
+    overflow:hidden;
+    width:100%;
+    margin-bottom: 1.1em;
+    color:#e86847;
+}
+.art_ct img, .ct_news img{
+    max-width: 200px;
+    height:auto;
+    margin: 1.2em;
+}
+.coin_icon_32{
+    width:32px;
+}
