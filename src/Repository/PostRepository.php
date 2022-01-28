@@ -72,6 +72,26 @@ class PostRepository extends ServiceEntityRepository{
         return $result;
     }
 
+    /**
+     * select all the urls, used in links and sitemaps
+     */
+    public function getAllPostsUrl(){
+        $result = false;
+        try{
+            $sql = 'SELECT utl
+                    FROM post';
+
+            $stmt = $this->con->prepare($sql);
+            $obj = $stmt->execute();
+            $result = $obj->fetchAllAssociative();
+
+        }catch(\Exception $e){
+            $result = false;
+        }
+        
+        return $result;
+    }
+
     // /**
     //  * @return Post[] Returns an array of Post objects
     //  */
