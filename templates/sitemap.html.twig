@@ -2,8 +2,8 @@
     <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
     {% for url in url_list %}
         <url>
-            <loc>{{ hostname~url.utl }}</loc>
-            <lastmod>{{ url.publish_date | date("m/d/Y") }}</lastmod>
+            <loc>{{ hostname~'news/'~url.utl }}</loc>
+            <lastmod>{{ url.publish_date | date("Y-m-d") }}</lastmod>
         </url>
     {% endfor %}
     </urlset>
