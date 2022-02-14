@@ -26,12 +26,16 @@ class MainPageController extends AbstractController
         //get latest crypto news
         $latestCryptoNews = $repository->findBycategory(1,0,12);
 
-        //get coins price data
+        //js,css plugins for this page
+        $jsplugin = array('datatables','chartjs');
+        $cssplugin = array('datatables');
 
         return $this->render('public/index.html.twig', [
                                 'cryptonews'=>$latestCryptoNews,
                                 'market_data'=>$market_data,
-                                'pag'=>$pag
+                                'pag'=>$pag,
+                                'jsplugin'=>$jsplugin,
+                                'cssplugin'=>$cssplugin
                             ]);
     }
 }

@@ -78,7 +78,7 @@ class PostRepository extends ServiceEntityRepository{
     public function getAllPostsUrl(){
         $result = false;
         try{
-            $sql = 'SELECT utl
+            $sql = 'SELECT utl, publish_date
                     FROM post';
 
             $stmt = $this->con->prepare($sql);

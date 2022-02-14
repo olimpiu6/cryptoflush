@@ -24,8 +24,10 @@
                             {% if pag > 1 %}
                                 {% set index = (pag - 1) * 100 %}
                             {% endif %}
-
+                            {# set js object for sparkline data #}
+                            {% set js_sparline = '' %}
                             {% for pl in market_data %}
+                                {% set js_sparline = js_sparline ~pl.json_data~',' %}
                                 <tr>
                                     <td>{{ loop.index + index }}</td>
                                     <td>
@@ -49,11 +51,17 @@
                                         {% endif %}
                                     </td>
                                     <td>{{ pl.total_volume | number_format(0,'.', ',') }}</td>
-                                    <td></td>
+                                    <td>
+                                        <canvas class="csparkline" width="135" height="35" id="{{ pl.coin_ticker }}"></canvas>
+                                    </td>
                                 </tr>
+
                             {% endfor %}
                         </tbody>
                     </table>
+                    <script>
+                        var js_sparline = [{{ js_sparline | raw }}];
+                    </script>
                     <div class="btn-group btn-group" role="group" aria-label="Paginator">
                         {# caltulate page url number #}
                         {% if pag <= 1 %}
@@ -72,8 +80,7 @@
                                 next >>
                             </a>
                         {% endif %}
-                        
-                        
+
                     </div>
                 </div>
             </div>

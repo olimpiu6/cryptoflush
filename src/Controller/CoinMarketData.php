@@ -21,7 +21,7 @@ class CoinMarketData extends AbstractController{
         $market_data = $repository->findLimit($offset, 100);
 
         //js,css plugins for this page
-        $jsplugin = array('datatables');
+        $jsplugin = array('datatables','chartjs');
         $cssplugin = array('datatables');
 
         return $this->render('public/coins_market_data.html.twig', [
