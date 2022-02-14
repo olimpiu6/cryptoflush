@@ -6,6 +6,9 @@ body{
 a{
     color:#607D8B;
 }
+td{
+    vertical-align: middle !important;
+}
 .login-frm{
     padding:20px;
     border:1px solid #20222e;
@@ -108,4 +111,7 @@ a{
 }
 .coin_icon_32{
     width:32px;
+}
+.coin_icon_24{
+    width: 24px;
 }

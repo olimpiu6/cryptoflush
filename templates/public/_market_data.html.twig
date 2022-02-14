@@ -19,11 +19,17 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {# set index number acording to pagination, ex: if pag = 2 index 1=200 #}
+                            {% set index = 0 %}
+                            {% if pag > 1 %}
+                                {% set index = (pag - 1) * 100 %}
+                            {% endif %}
+
                             {% for pl in market_data %}
                                 <tr>
-                                    <td>{{ loop.index }}</td>
+                                    <td>{{ loop.index + index }}</td>
                                     <td>
-                                        <img src="{{ pl.string }}" class="coin_icon_32">
+                                        <img src="{{ pl.string }}" class="coin_icon_24">
                                     </td>
                                     <td>
                                         <strong>{{ pl.coin_ticker | capitalize }}</strong>
@@ -48,13 +54,28 @@
                             {% endfor %}
                         </tbody>
                     </table>
+                    <div class="btn-group btn-group" role="group" aria-label="Paginator">
+                        {# caltulate page url number #}
+                        {% if pag <= 1 %}
+                            {% set pag = 1 %}
+                            <a class="btn btn-outline-secondary" href="{{ path('crypto') }}">
+                                << prev
+                            </a>
+                            <a class="btn btn-outline-secondary" href="{{ path('crypto',{pag:pag+1}) }}">
+                                next >>
+                            </a>
+                            {% else %}
+                            <a class="btn btn-outline-secondary" href="{{ path('crypto',{pag:pag-1}) }}">
+                                << prev
+                            </a>
+                            <a class="btn btn-outline-secondary" href="{{ path('crypto',{pag:pag+1}) }}">
+                                next >>
+                            </a>
+                        {% endif %}
+                        
+                        
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-
-
-
-{% block jsplugins %}
-    <script src="{{ asset('js/plugin/datatables/datatables.js') }}"></script>
-{% endblock %}

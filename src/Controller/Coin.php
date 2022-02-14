@@ -25,7 +25,7 @@ class Coin extends AbstractController{
                                         0
                                     );
 
-        return $this->render('public/_coin_list.html.twig', [
+        return $this->render('public/_market_data.html.twig', [
                                 'price_list'=>$price_list
                             ]);
     }

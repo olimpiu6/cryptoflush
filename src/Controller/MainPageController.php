@@ -7,7 +7,6 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use App\Entity\Post;
 use App\Entity\CoinMarketsData;
-use App\Service\SiteMapGenerator;
 
 class MainPageController extends AbstractController
 {
@@ -17,19 +16,22 @@ class MainPageController extends AbstractController
     public function index(): Response{
         //CoinsPrice repository object
         $repository = $this->getDoctrine()->getRepository(CoinMarketsData::class);
-        $offset = 0;
+        $pag = 1;
         //get price list 
-        $market_data = $repository->findLimit($offset, 100);
+        $market_data = $repository->findLimit(0, 100);
 
         //create new RssFeed doctrine object, or something like that
         $repository = $this->getDoctrine()->getRepository(Post::class);
         
         //get latest crypto news
-        $latestCryptoNews = $repository->findBycategory(1,0,6);
+        $latestCryptoNews = $repository->findBycategory(1,0,12);
+
+        //get coins price data
 
         return $this->render('public/index.html.twig', [
                                 'cryptonews'=>$latestCryptoNews,
-                                'market_data'=>$market_data
+                                'market_data'=>$market_data,
+                                'pag'=>$pag
                             ]);
     }
 }

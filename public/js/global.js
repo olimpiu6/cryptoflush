@@ -1,18 +1,47 @@
-// btc exchange list data tables
-if($('#btc_rates_list').length){
-    $('#btc_rates_list').DataTable({
-        "pageLength": 100
-    });
-}
-
 /**
- * default data table class, reusable for each data table 
+ * document ready for jsuery based plugins
+ * ex: datatable
  */
-if($('.data-t').length){
-    $('.data-t').DataTable({
-        "pageLength": 100
-    });
-}
+
+$(document).ready(function(){
+    // btc exchange list data tables
+    if($('#btc_rates_list').length){
+        $('#btc_rates_list').DataTable({
+            "pageLength": 100,
+            "search":false,
+            "paging":false,
+            "searching":false,
+            "bInfo" : false
+        });
+    }
+
+    /**
+     * market data table --data table
+     */
+    if($('#coin_price_list').length){
+        $('#coin_price_list').DataTable({
+            "pageLength": 100,
+            "search":false,
+            "paging":false,
+            "searching":false,
+            "bInfo" : false
+        });
+    }
+
+    /**
+     * default data table class, reusable for each data table 
+     */
+    if($('.data-t').length){
+        $('.data-t').DataTable({
+            "pageLength": 100,
+            "search":false,
+            "paging":false,
+            "searching":false,
+            "bInfo" : false
+        });
+    }
+});
+
 
 
 /**
@@ -29,3 +58,4 @@ if($('.change_perc').length){
         $(this).addClass(css_class);
     });
 }
+

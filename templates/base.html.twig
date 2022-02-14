@@ -15,7 +15,19 @@
             <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
             <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;700&display=swap" rel="stylesheet">
             
-            {% block cssplugins %}{% endblock %}
+            {% block cssplugins %}
+                {#
+                    loads js plugin file, 
+                    naming convention: file and folder should have the same name
+                    all plugins should be in public/js/pluginname/pluginname.js
+                #}
+                {% if cssplugin is defined and cssplugin is iterable %}
+                    {% for cssfile in cssplugin %}
+                        <link href="{{ asset('public/js/plugin/'~cssfile~'/'~cssfile~'.css') }}" rel="stylesheet"/>
+                    {% endfor %}
+                {% endif %}
+            
+            {% endblock %}
 
             <link href="{{ asset('public/css/global.css') }}" rel="stylesheet"/>
         {% endblock %}
@@ -42,9 +54,20 @@
         {% block javascripts %}
             <script src="{{ asset('public/js/jquery.js') }}"></script>
             <script src="{{ asset('public/js/popper.js') }}"></script>
-            <script src="{{ asset('public/js/bootstrap.min.js') }}"></script>
+            <script src="{{ asset('public/js/bootstrap.bundle.min.js') }}"></script>
 
-            {% block jsplugins %}{% endblock %}
+            {#
+                loads js plugin file, 
+                naming convention: file and folder should have the same name
+                all plugins should be in public/js/pluginname/pluginname.js
+            #}
+            {% block jsplugins %}
+                {% if jsplugin is defined and jsplugin is iterable %}
+                    {% for jsfile in jsplugin %}
+                        <script src="{{ asset('public/js/plugin/'~jsfile~'/'~jsfile~'.js') }}"></script>
+                    {% endfor %}
+                {% endif %}
+            {% endblock %}
 
             <script src="{{ asset('public/js/global.js') }}"></script>
         {% endblock %}
