@@ -20,10 +20,36 @@ class CoinMarketsDataRepository extends ServiceEntityRepository
         $this->con = $this->getEntityManager()->getConnection();
     }
 
+    /**
+     * finds $limit amounts of data
+     */
     public function findLimit($offset, $limit){
         $result = false;
         try{
             $sql = 'SELECT *
+            FROM coin_markets_data 
+            WHERE market_cap_rank > 0
+            ORDER BY market_cap_rank ASC
+            LIMIT '. $offset .', ' . $limit;
+
+            $stmt = $this->con->prepare($sql);
+            $obj = $stmt->execute();
+            $result = $obj->fetchAllAssociative();
+
+        }catch(\Exception $e){
+            $result = false;
+        }
+        
+        return $result;
+    }
+
+    /**
+     * gets coin ticker only, x amounts at the time
+     */
+    public function findLimitTickers($offset, $limit){
+        $result = false;
+        try{
+            $sql = 'SELECT coin_ticker
             FROM coin_markets_data 
             WHERE market_cap_rank > 0
             ORDER BY market_cap_rank ASC

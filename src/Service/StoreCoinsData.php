@@ -1,7 +1,7 @@
 <?php
 namespace App\Service;
 
-use App\Entity\CoinMarketsData;
+use App\Entity\Coins;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\CurlMaker;
 

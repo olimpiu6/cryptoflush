@@ -23,10 +23,11 @@ class CoingeckoApi{
      */
     public function setEndPoints(){
         $this->endPoints = array(
-            'exchange_rates' => 'exchange_rates',
-            'coins/list'     => 'coins/list',
-            'coins/markets'  => 'coins/markets',
-            'simple/price'   => 'simple/price'
+            'exchange_rates'    => 'exchange_rates',
+            'coins/list'        => 'coins/list',
+            'coins/markets'     => 'coins/markets',
+            'simple/price'      => 'simple/price',
+            'coin/market_chart' => 'coins/{id}/market_chart'
         );
 
         return $this;
@@ -72,8 +73,9 @@ class CoingeckoApi{
      * full resource url
      * generates the full url for a given resource
      */
-    public function makeUrl($end_points = '', $flag = ''){
-        $url = $this->apiUrl . $end_points . $flag;
+    public function makeUrl($end_points = '', $flag = '', $ticker = ''){
+        $endp = \preg_replace('/{id}/', $ticker, $end_points);
+        $url = $this->apiUrl . $endp . $flag;
 
         return $url;
     }
@@ -205,6 +207,27 @@ class CoingeckoApi{
 
         //check for errors and return 
         return $this->jsonToArray($apiResponse);
+    }
+
+    /**
+     * get coin chart daily data, searches for all data
+     * 
+     * vs_currency : usd... etc
+     * days: number of days 1,2,365,max..
+     */
+    public function coinsChart($flag = array('id'=> null,
+                                        'vs_currency' => null,
+                                        'days' => null),
+                                $ticker){
+        //set the flags
+        $flags = $this->makeParam($flag);;
+
+        //conect and get api response
+        $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker) );
+        echo ($this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker)) . '<br>';
+        //check for errors and return 
+        return $this->jsonToArray($apiResponse);
+
     }
 
 //class end
