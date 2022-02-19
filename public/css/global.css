@@ -115,3 +115,17 @@ td{
 .coin_icon_24{
     width: 24px;
 }
+.p_footer{
+    background:#080a0e;
+    color: #6c757d;
+}
+.p_footer hr{
+    background: #6c757d;
+}
+.p_footer .col-md-4{
+    padding-top: 20px;
+}
+.breadcrumb{
+    background: transparent;
+    padding: 12px 0;
+}

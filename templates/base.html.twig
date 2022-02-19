@@ -53,6 +53,10 @@
             {% block pageheader %}{% endblock %}
         {% endblock %}
 
+        {% block pagefooter %}
+            {% include 'public/_footer.html.twig' %}
+        {% endblock %}
+
         {% block javascripts %}
             <script src="{{ asset('public/js/jquery.js') }}"></script>
             <script src="{{ asset('public/js/popper.js') }}"></script>

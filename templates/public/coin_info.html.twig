@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}{{ market_data[0].coinTicker | capitalize }}{% endblock %}
+
+{% block body %}
+    {% include '/public/_main_menu.html.twig' %}
+
+    <div class="container">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item">
+                    <a href="{{ path('main_page') }}">Home</a>
+                </li>
+                <li class="breadcrumb-item">
+                    <a href="{{ path('coins') }}">Coins</a>
+                </li>
+                <li class="breadcrumb-item active" aria-current="page">
+                    {{ market_data[0].coinTicker | capitalize }}
+                </li>
+            </ol>
+        </nav>
+    </div>
+
+    {% block pageheader %}
+        <div class="container-fluid homepage-header">
+            <div class="container">
+                <div class="row">
+                    <h1>
+                        {% if market_data[0].string != '' %}
+                            <img src="{{ market_data[0].string }}" class="coin_icon_32"> 
+                        {% endif %}
+                        {{ market_data[0].coinTicker | capitalize }}
+                    </h1>
+                </div>
+            </div>
+        </div>
+    {% endblock %}
+
+    
+
+    
+{% endblock %}

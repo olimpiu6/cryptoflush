@@ -224,7 +224,7 @@ class CoingeckoApi{
 
         //conect and get api response
         $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker) );
-        echo ($this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker)) . '<br>';
+        //echo ($this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker)) . '<br>';
         //check for errors and return 
         return $this->jsonToArray($apiResponse);
 

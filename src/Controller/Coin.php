@@ -6,27 +6,34 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use App\Entity\CoinsPrice;
+use App\Entity\CoinDailyChart;
+use App\Entity\CoinMarketsData;
 
 class Coin extends AbstractController{
 
     /**
-     * @Route("/coins", name="coins")
+     * @Route("/coins/{ticker}", name="coins")
      */
-    public function showCoinList(): Response{
-        //CoinsPrice repository object
-        $repository = $this->getDoctrine()->getRepository(CoinsPrice::class);
+    public function showCoinInfo($ticker = NULL): Response{
+        //redirect to market data if no ticker
+        if($ticker == NULL){
+           return $this->redirectToRoute('crypto');
+        }
+        //CoinDailyChart repository object
+        $chartrepo = $this->getDoctrine()->getRepository(CoinDailyChart::class);
 
-        //get price list 
-        $price_list = $repository->findBy(
-                                        array(), 
-                                        array('marketCap'=>'DESC'), 
-                                        100,
-                                        0
-                                    );
+        //coin market repository
+        $marketrepo = $this->getDoctrine()->getRepository(CoinMarketsData::class);
 
-        return $this->render('public/_market_data.html.twig', [
-                                'price_list'=>$price_list
+        //get market repo data
+        $market_data = $marketrepo->findBy(['coinTicker'=>$ticker]);
+
+        //get chart data
+        $chart_data = $chartrepo->findBy(['coinTicker'=>$ticker]);
+
+        return $this->render('public/coin_info.html.twig', [
+                                'chart_data'=>$chart_data,
+                                'market_data'=>$market_data,
                             ]);
     }
 

@@ -75,7 +75,6 @@ class StoreDailyChartData{
                 foreach($tickers as $k => $v){
                     //get data from api
                     $data = $cg->coinsChart(array(
-                                               
                                                 'vs_currency' => 'usd',
                                                 'days' => 'max'
                                                 ),
@@ -99,9 +98,10 @@ class StoreDailyChartData{
             }
 
             //increase paginator by some amount, to get next chunk of tickers
-            $loopControl = false;
+            //$loopControl = false;
             $coinPaginator += 30;
             
+            sleep(2);
         }
     }
 

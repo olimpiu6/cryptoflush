@@ -66,6 +66,26 @@ class CoinMarketsDataRepository extends ServiceEntityRepository
         return $result;
     }
 
+    /**
+     * get all tickers
+     */
+    public function findAllTickers(){
+        $result = false;
+        try{
+            $sql = 'SELECT coin_ticker
+                    FROM coin_markets_data';
+
+            $stmt = $this->con->prepare($sql);
+            $obj = $stmt->execute();
+            $result = $obj->fetchAllAssociative();
+
+        }catch(\Exception $e){
+            $result = false;
+        }
+        
+        return $result;
+    }
+
     // /**
     //  * @return CoinMarketsData[] Returns an array of CoinMarketsData objects
     //  */
