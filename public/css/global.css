@@ -129,3 +129,14 @@ td{
     background: transparent;
     padding: 12px 0;
 }
+#coin_price_list a{
+    text-decoration: none;
+    color:#fff;
+}
+#coin_price_list a:hover{
+    color: #dee2e6;
+}
+.list-group-item{
+    background: transparent;
+    border: 1px solid #292a32;
+}

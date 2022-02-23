@@ -111,7 +111,7 @@ class StoreCoinsMarketData{
                     'per_page' => 250, 
                     'page' => $api_data_page, 
                     'sparkline' => true, 
-                    'price_change_percentage'=> '7d,30d,1y'
+                    'price_change_percentage'=> '1h,24h,7d,30d,1y'
                 )
             );
 

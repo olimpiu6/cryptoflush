@@ -51,57 +51,43 @@ class StoreDailyChartData{
      * selects ticker from db, stores in chuncks
      */
     public function storeData(){
-        //coin ticker result paginator
-        $coinPaginator = 0;
-
-        //flag for the loop control
-        $loopControl = true;
-
+        
         //coingecko api object
         $cg = new CoingeckoApi();
 
         //get some tickers coin market repository
         $coinrepo = $this->em->getRepository(CoinMarketsData::class);
+        //get all tickers 
+        $tickers = $coinrepo->findAllTickers();
 
         //chart data repo
         $chartrepo = $this->em->getRepository(CoinDailyChart::class);
 
-        while($loopControl){
-            $tickers = $coinrepo->findLimitTickers($coinPaginator, 30);
-            
-            //check if some results are found
-            if(is_array($tickers) && \count($tickers) > 0){
-                //loop through results and create/update chart data
-                foreach($tickers as $k => $v){
-                    //get data from api
-                    $data = $cg->coinsChart(array(
-                                                'vs_currency' => 'usd',
-                                                'days' => 'max'
-                                                ),
-                                            $v['coin_ticker']);
-                    //check if data is array, insert/update values in chart table
-                    if(\is_array($data) && \count($data) > 0){
-                        //try to find chart data 
-                        $ch = $chartrepo->findOneBy(['coinTicker'=>$v['coin_ticker']]);
-                        if(!$ch){
-                            $this->createChartData($data, $v['coin_ticker']);
-                        }else{
-                            $this->updateChartData($ch,$data);
-                        }
+        //loop and save data
+        for($i = 0; $i < count($tickers); $i++){
+            //get data from api server
+            $data = $cg->coinsChart(array(
+                'vs_currency' => 'usd',
+                'days' => 'max'
+                ),
+            $tickers[$i]['coin_ticker']);
 
-                    }
+            //check if data is array, insert/update values in chart table
+            if(\is_array($data) && \count($data) > 0){
+                //try to find chart data 
+                $ch = $chartrepo->findOneBy(['coinTicker'=>$tickers[$i]['coin_ticker']]);
+                if(!$ch){
+                    $this->createChartData($data, $tickers[$i]['coin_ticker']);
+                }else{
+                    $this->updateChartData($ch, $data);
                 }
-            }else{
-                //break the loop
-                $loopControl = false;
-                break;
+
             }
 
-            //increase paginator by some amount, to get next chunk of tickers
-            //$loopControl = false;
-            $coinPaginator += 30;
-            
-            sleep(2);
+            //sleep every 30 results
+            if($i > 0 && $i % 30 == 0){
+                sleep(2);
+            }
         }
     }
 

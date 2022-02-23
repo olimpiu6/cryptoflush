@@ -24,7 +24,8 @@ if($('#coin_price_list').length){
         "search":false,
         "paging":false,
         "searching":false,
-        "bInfo" : false
+        "bInfo" : false,
+        "responsive" : true, 
     });
 }
 
@@ -40,8 +41,6 @@ if($('.data-t').length){
         "bInfo" : false
     });
 }
-
-
 
 
 /**
@@ -128,4 +127,71 @@ if($('.csparkline').length){
         chart_color = '';
 
     });
+}
+
+/**
+ * util function,
+ * adds a 0 to numbers < than 10
+ */
+function dateFormat(num = 0){
+    if(num < 10 ){
+        return '0' +num;
+    }
+    return num;
+}
+
+/**
+ * coin chart, coins/coin url
+ * create json for chart and other stuff
+ */
+if($('#cr_day_chart').length){
+    (function(){
+        //chart data prices ,build with database json data
+        var chartData = [];
+        var dataLIn = '';
+        var d = '';
+        //loop through prices and create charData array { time: '2018-12-22', value: 32.51 }
+        //at the end add today price
+        if(typeof cr_chart_data.prices != 'undefined'){
+            for(var i = 0; i < cr_chart_data.prices.length - 1; i++){
+                //check if both time and price are inside each price array
+                if(typeof cr_chart_data.prices[i][0] !== 'undefined' && typeof cr_chart_data.prices[i][1] !==  'undefined'){
+                    d = new Date(cr_chart_data.prices[i][0]);
+                    dataLIne = {"time" : d.getFullYear() + '-' + dateFormat(d.getMonth() +1) +'-' + dateFormat(d.getDate()) , "value":cr_chart_data.prices[i][1]};
+                    chartData.push(dataLIne);
+                }
+            }
+        }
+        d = new Date();
+        dataLIne = {"time" : d.getFullYear() + '-' + dateFormat(d.getMonth() +1) +'-' + dateFormat(d.getDate()) , "value":cr_market_data.current_price};
+        chartData.push(dataLIne);
+        
+
+        var chartEl = document.getElementById('cr_day_chart');
+        const chart = LightweightCharts.createChart(chartEl,
+                                                    {   width: chartEl.width, 
+                                                        height: 400,
+                                                        layout: {
+                                                            backgroundColor: '#131722',
+                                                            textColor: '#d1d4dc',
+                                                        },
+                                                        grid: {
+                                                            vertLines: {
+                                                                color: 'rgba(42, 46, 57, 0)',
+                                                            },
+                                                            horzLines: {
+                                                                color: 'rgba(42, 46, 57, 0.6)',
+                                                            },
+                                                        },
+                                                     });
+        const areaSeries = chart.addAreaSeries({
+                                                lineWidth: 1,
+                                                topColor: 'rgba(38, 198, 218, 0.56)',
+                                                bottomColor: 'rgba(38, 198, 218, 0.04)',
+                                                lineColor: 'rgba(38, 198, 218, 1)',
+                                                });
+        areaSeries.setData(chartData);
+    }());
+    
+    
 }

@@ -20,20 +20,18 @@ class Coin extends AbstractController{
            return $this->redirectToRoute('crypto');
         }
         //CoinDailyChart repository object
-        $chartrepo = $this->getDoctrine()->getRepository(CoinDailyChart::class);
+        $chart_data = $this->getDoctrine()->getRepository(CoinDailyChart::class)->findOneBy(['coinTicker'=>$ticker]);
 
         //coin market repository
-        $marketrepo = $this->getDoctrine()->getRepository(CoinMarketsData::class);
+        $market_data = $this->getDoctrine()->getRepository(CoinMarketsData::class)->findOneBy(['coinTicker'=>$ticker]);
 
-        //get market repo data
-        $market_data = $marketrepo->findBy(['coinTicker'=>$ticker]);
-
-        //get chart data
-        $chart_data = $chartrepo->findBy(['coinTicker'=>$ticker]);
+        //js plugins
+        $jsplugin = array('marketdata','trviewchart');
 
         return $this->render('public/coin_info.html.twig', [
                                 'chart_data'=>$chart_data,
                                 'market_data'=>$market_data,
+                                'jsplugin' =>$jsplugin
                             ]);
     }
 

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}{{ market_data[0].coinTicker | capitalize }}{% endblock %}
+{% block title %}{{ market_data.coinTicker | capitalize }}{% endblock %}
 
 {% block body %}
     {% include '/public/_main_menu.html.twig' %}
@@ -15,7 +15,7 @@
                     <a href="{{ path('coins') }}">Coins</a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                    {{ market_data[0].coinTicker | capitalize }}
+                    {{ market_data.coinTicker | capitalize }}
                 </li>
             </ol>
         </nav>
@@ -25,18 +25,115 @@
         <div class="container-fluid homepage-header">
             <div class="container">
                 <div class="row">
-                    <h1>
-                        {% if market_data[0].string != '' %}
-                            <img src="{{ market_data[0].string }}" class="coin_icon_32"> 
+                    <h1> <i class="fas fa-angle-up"></i>
+                        {% if market_data.string != '' %}
+                            <img src="{{ market_data.string }}" class="coin_icon_32"> 
                         {% endif %}
-                        {{ market_data[0].coinTicker | capitalize }}
+                        {{ market_data.coinTicker | capitalize }}
                     </h1>
                 </div>
             </div>
         </div>
     {% endblock %}
 
-    
+    <div class="container" id="market_chart_data">
+        <div class="row">
+            <!-- price and 24h % change -->
+            <div class="col-md-12">
+                <h5>
+                    <span id="cr_coin-price"></span>
+                    <span id="cr_day-change"></span>
+                </h5>
+                <h5>
+                    24h volume <span id="cr_day-vol"><span>
+                </h5>
+            </div>
 
+            <!--generic data -->
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="float-left">24h high</span> 
+                        <span class="float-right font-weight-bold" id="cr_24h"></span> 
+                    </li>
+                    <li class="list-group-item">
+                        <span class="float-left">24h low</span> 
+                        <span class="float-right font-weight-bold" id="cr_24l"></span> 
+                    </li>
+                    <li class="list-group-item">
+                        <span class="float-left">24h change</span> 
+                        <span class="float-right font-weight-bold" id="cr_24change"></span> 
+                    </li>
+                     <li class="list-group-item">
+                        <span class="float-left">24h % change</span> 
+                        <span class="float-right font-weight-bold" id="cr_24prchange"></span> 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-6">
+                <ul class="list-group">
+                    <li class="list-group-item">
+                        <span class="float-left">Circulating supply</span> 
+                        <span class="float-right font-weight-bold" id="cr_cirsupply"></span> 
+                    </li>
+                    <li class="list-group-item">
+                        <span class="float-left">Total supply</span> 
+                        <span class="float-right font-weight-bold" id="cr_totsupply"></span> 
+                    </li>
+                    <li class="list-group-item">
+                        <span class="float-left">Market cap</span> 
+                        <span class="float-right font-weight-bold" id="cr_marketcap"></span> 
+                    </li>
+                     <li class="list-group-item">
+                        <span class="float-left">Diluted value</span> 
+                        <span class="float-right font-weight-bold" id="cr_dilutval"></span> 
+                    </li>
+                </ul>
+            </div>
+
+            <div class="col-md-12">
+            <hr>
+                <div class="table-responsive">
+                    <table class="table table-sm table-striped table-dark table-sm text-center table-bordered">
+                        <tr>
+                            <th>1h</th>
+                            <th>24h</th>
+                            <th>7d</th>
+                            <th>30d</th>
+                            <th>1y</th>
+                        </tr>
+                        <tbody>
+                            <tr>
+                                <td id="ch1h"></td>
+                                <td id="ch241h"></td>
+                                <td id="ch7d"></td>
+                                <td id="ch30d"></td>
+                                <td id="ch1y"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+        </div>
+    </div>    
+
+    <!-- chart element -->
+    <div class="container" id="market_chart_data">
+        <div class="row">
+            <div class="col-md-12">
+                <h3>Daily chart</h3>
+            </div>
+
+            <div class="col-md-12" id="cr_day_chart"></div>
+        </div>
+    </div>
+
+
+    <script>
+        var cr_market_data = {{ market_data.jsonData | json_encode() | raw }};
+        var cr_chart_data = {{ chart_data.jsonData | json_encode() | raw }};
+    </script>
     
 {% endblock %}

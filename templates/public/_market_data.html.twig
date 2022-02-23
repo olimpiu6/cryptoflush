@@ -12,6 +12,7 @@
                                 <th>#</th>
                                 <th>Icon</th>
                                 <th>Name</th>
+                                <th>Symbol</th>
                                 <th>Price</th>
                                 <th>24h % change</th>
                                 <th>24h volume</th>
@@ -34,8 +35,13 @@
                                         <img src="{{ pl.string }}" class="coin_icon_24">
                                     </td>
                                     <td>
-                                        <strong>{{ pl.coin_ticker | capitalize }}</strong>
+                                        <strong>
+                                            <a href="{{ path('coins', {ticker:pl.coin_ticker}) }}">
+                                                {{ pl.coin_ticker | capitalize }}
+                                            </a>
+                                        </strong>
                                     </td>
+                                    <td>{{ pl.symbol | upper }}</td>
                                     <td>$ {{ pl.current_price }}</td>
                                     <td>
                                         {% if pl.daily_price_change_percentage > 0 %}

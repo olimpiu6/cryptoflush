@@ -24,10 +24,7 @@ class UpdateDailyChart extends Command{
 
     protected function configure(){
 
-        $this
-            ->setDescription('Update coins falily chart data')
-            ->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run')
-        ;
+        $this->setDescription('Update coins falily chart data')->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run');
     }
 
     /**
