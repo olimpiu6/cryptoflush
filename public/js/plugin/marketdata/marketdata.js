@@ -91,8 +91,12 @@ function numberFormatNegat(num, digits = 2){
             $('#cr_24change').removeClass('text-success').removeClass('text-danger').html('$ '+ data[4].toFixed(2));
             $('#cr_24prchange').removeClass('text-success').removeClass('text-danger').html('% '+ data[5].toFixed(2));
         }
-
-    
         
+    }
+
+    //coin info data
+    if($('#ci_description').length){
+        var ci_description = coin_info[0].description.en != 'undefined' ? coin_info[0].description.en : '';
+        $('#ci_description').html(ci_description);
     }
 })();

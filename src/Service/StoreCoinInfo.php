@@ -1,12 +1,12 @@
 <?php
 namespace App\Service;
 
-use App\Entity\CoinDailyChart;
+use App\Entity\CoinInfo;
 use App\Entity\CoinMarketsData;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Service\CurlMaker;
 
-class StoreDailyChartData{
+class StoreCoinInfo{
 
     private $em;
 
@@ -21,12 +21,12 @@ class StoreDailyChartData{
      * @param $coinData 
      * @param $coinTicker
      */
-    public function createChartData($coinData, $coinTicker){
-        $chartData = new CoinDailyChart();
+    public function createInfoData($coinData, $coinTicker){
+        $chartData = new CoinInfo();
 
-        $chartData->setCoinTicker($coinTicker);
-        $chartData->setVsCurrency('usd');
+        $chartData->setLang('en');
         $chartData->setJsonData($coinData);
+        $chartData->setTicker($coinTicker);
 
         //persist market data to data base
         $this->em->persist($chartData);
@@ -39,7 +39,7 @@ class StoreDailyChartData{
      * @param $chartDataObj
      * @param $jsonData
      */
-    public function updateChartData($chartDataObj, $jsonData){
+    public function updateInfoData($chartDataObj, $jsonData){
         $chartDataObj->setJsonData($jsonData);
 
         $this->em->flush();
@@ -59,36 +59,38 @@ class StoreDailyChartData{
         $coinrepo = $this->em->getRepository(CoinMarketsData::class);
         //get all tickers 
         $tickers = $coinrepo->findAllTickers();
-        //free memory, delete coin repo obj
-        unset($coinrepo);
+
+        //chart data repo
+        $coinInforepo = $this->em->getRepository(CoinInfo::class);
 
         //loop and save data
         for($i = 0; $i < count($tickers); $i++){
-            //chart data repo
-            $chartrepo = $this->em->getRepository(CoinDailyChart::class);
-
             //get data from api server
-            $data = $cg->coinsChart(array(
-                'vs_currency' => 'usd',
-                'days' => 'max'
+            $data = $cg->coinTechInfo(array(
+                'id'=> $tickers[$i]['coin_ticker'],
+                'localization' => false,
+                'tickers' => false,
+                'market_data' => false,
+                'community_data' => true,
+                'developer_data' => true,
+                'sparkline' => false
                 ),
             $tickers[$i]['coin_ticker']);
 
             //check if data is array, insert/update values in chart table
             if(\is_array($data) && \count($data) > 0){
                 //try to find chart data 
-                $ch = $chartrepo->findOneBy(['coinTicker'=>$tickers[$i]['coin_ticker']]);
+                $ch = $coinInforepo->findOneBy(['ticker'=>$tickers[$i]['coin_ticker']]);
                 if(!$ch){
-                    $this->createChartData($data, $tickers[$i]['coin_ticker']);
+                    $this->createInfoData($data, $tickers[$i]['coin_ticker']);
                 }else{
-                    $this->updateChartData($ch, $data);
+                    $this->updateInfoData($ch, $data);
                 }
 
             }
-            unset($chartrepo);
 
-            //sleep 2 sec each 25 iterations
-            if($i > 0 && $i % 25 == 0){
+            //sleep 2 sec every 30 results
+            if($i > 0 && $i % 30 == 0){
                 \sleep(2);
             }
             //\usleep(200);

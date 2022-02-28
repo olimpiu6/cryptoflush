@@ -8,14 +8,14 @@ use Symfony\Component\Console\Input\InputOption;
 use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 use Doctrine\ORM\EntityManagerInterface;
-use App\Service\StoreDailyChartData;
-use App\Entity\CoinDailyChart; 
+use App\Service\StoreCoinInfo;
+use App\Entity\CoinInfo; 
 
-class UpdateDailyChart extends Command{
+class UpdateCoinInfo extends Command{
 
     private $entityManager;
 
-    protected static $defaultName = 'app:update:dailychart';
+    protected static $defaultName = 'app:update:coininfo';
 
     public function __construct(EntityManagerInterface $entityManager){
         set_time_limit(0);
@@ -26,7 +26,7 @@ class UpdateDailyChart extends Command{
 
     protected function configure(){
 
-        $this->setDescription('Update coins falily chart data')->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run');
+        $this->setDescription('Update coins info')->addOption('dry-run', null, InputOption::VALUE_NONE, 'Dry run');
     }
 
     /**
@@ -35,9 +35,9 @@ class UpdateDailyChart extends Command{
     public function updateData(){
         $em = $this->entityManager;
         //create new CoinMarketsData doctrine object, or something like that
-        $repository = $em->getRepository(CoinDailyChart::class);
+        $repository = $em->getRepository(CoinInfo::class);
 
-        $mk = new StoreDailyChartData($em);
+        $mk = new StoreCoinInfo($em);
         $mk->storeData();
         
     }
@@ -53,7 +53,7 @@ class UpdateDailyChart extends Command{
             $this->updateData();
         }
 
-        $io->success(sprintf("Done updating market data \n"));
+        $io->success(sprintf("Done updating coins info \n"));
 
         return 0;
     }

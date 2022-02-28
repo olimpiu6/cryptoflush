@@ -27,7 +27,8 @@ class CoingeckoApi{
             'coins/list'        => 'coins/list',
             'coins/markets'     => 'coins/markets',
             'simple/price'      => 'simple/price',
-            'coin/market_chart' => 'coins/{id}/market_chart'
+            'coin/market_chart' => 'coins/{id}/market_chart',
+            'coin/techinfo'     => 'coins/{id}'
         );
 
         return $this;
@@ -216,8 +217,8 @@ class CoingeckoApi{
      * days: number of days 1,2,365,max..
      */
     public function coinsChart($flag = array('id'=> null,
-                                        'vs_currency' => null,
-                                        'days' => null),
+                                            'vs_currency' => null,
+                                            'days' => null),
                                 $ticker){
         //set the flags
         $flags = $this->makeParam($flag);;
@@ -225,6 +226,29 @@ class CoingeckoApi{
         //conect and get api response
         $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker) );
         //echo ($this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker)) . '<br>';
+        //check for errors and return 
+        return $this->jsonToArray($apiResponse);
+
+    }
+
+    /**
+     * get coin info, social info, developper info, oficial site, etc
+     */
+    public function coinTechInfo($flag = array('id'=> null,
+                                               'localization' => null,
+                                               'tickers' => null,
+                                               'market_data' => null,
+                                               'community_data' => null,
+                                               'developer_data' => null,
+                                               'sparkline' => null
+                                            ), 
+                                $ticker){
+        //set the flags
+        $flags = $this->makeParam($flag);;
+
+        //conect and get api response
+        $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/techinfo'], $flags, $ticker) );
+        
         //check for errors and return 
         return $this->jsonToArray($apiResponse);
 
