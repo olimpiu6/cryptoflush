@@ -227,7 +227,11 @@ class CoingeckoApi{
         $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker) );
         //echo ($this->makeUrl($this->endPoints['coin/market_chart'], $flags, $ticker)) . '<br>';
         //check for errors and return 
-        return $this->jsonToArray($apiResponse);
+        /*
+        * check for errors and return , only string returned for this endpoint, big amount of data 
+        * screws memory consumtion
+        */
+        return $apiResponse; //$this->jsonToArray($apiResponse);
 
     }
 
@@ -244,13 +248,16 @@ class CoingeckoApi{
                                             ), 
                                 $ticker){
         //set the flags
-        $flags = $this->makeParam($flag);;
+        $flags = $this->makeParam($flag);
 
         //conect and get api response
         $apiResponse = $this->getResourceData( $this->makeUrl($this->endPoints['coin/techinfo'], $flags, $ticker) );
         
-        //check for errors and return 
-        return $this->jsonToArray($apiResponse);
+        /*
+        * check for errors and return , only string returned for this endpoint, big amount of data 
+        * screws memory consumtion
+        */
+        $this->jsonToArray($apiResponse);
 
     }
 

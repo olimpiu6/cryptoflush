@@ -19,7 +19,7 @@ class UpdateDailyChart extends Command{
 
     public function __construct(EntityManagerInterface $entityManager){
         set_time_limit(0);
-        ini_set('memory_limit', '1024M');
+        ini_set('memory_limit', '1536M');
         $this->entityManager = $entityManager;
         parent::__construct();
     }

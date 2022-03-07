@@ -28,7 +28,7 @@ class CoinDailyChart
     private $vsCurrency;
 
     /**
-     * @ORM\Column(type="json", nullable=true)
+     * @ORM\Column(type="text", nullable=true)
      */
     private $jsonData = [];
 
@@ -61,12 +61,12 @@ class CoinDailyChart
         return $this;
     }
 
-    public function getJsonData(): ?array
+    public function getJsonData(): ?string
     {
         return $this->jsonData;
     }
 
-    public function setJsonData(?array $jsonData): self
+    public function setJsonData(?string $jsonData): self
     {
         $this->jsonData = $jsonData;
 

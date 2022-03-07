@@ -4,7 +4,8 @@
 function numberFormat(num, digits = 2){
     if(typeof num == 'number'){
         try{
-            num = num > 1 ? new Intl.NumberFormat('en-US', { maximumSignificantDigits: digits }).format(num) : num;
+            num = num > 1 ? new Intl.NumberFormat('en-En', { style: 'currency', currency: 'USD' }).format(num) : num;
+            //num = num > 1 ? new Intl.NumberFormat('en-US', { maximumSignificantDigits: digits }).format(num) : num;
         }catch(err){
             console.log('aiii');
         }
@@ -60,14 +61,14 @@ function numberFormatNegat(num, digits = 2){
 
         
                   
-        $('#cr_coin-price').html('$ '+ data[0]);
-        $('#cr_24h').html('$ '+ data[2]);
-        $('#cr_24l').html('$ '+ data[3]);
+        $('#cr_coin-price').html(data[0]);
+        $('#cr_24h').html( data[2]);
+        $('#cr_24l').html( data[3]);
         $('#cr_cirsupply').html(data[6]);
         $('#cr_totsupply').html(data[7]);
-        $('#cr_marketcap').html('$ '+ data[8]);
-        $('#cr_dilutval').html('$ '+ data[9]);
-        $('#cr_day-vol').html('$' + data[10]);
+        $('#cr_marketcap').html(data[8]);
+        $('#cr_dilutval').html(data[9]);
+        $('#cr_day-vol').html(data[10]);
 
         $('#ch1h').html('% ' + data[11]);
         $('#ch241h').html('% ' + data[12]);
@@ -96,7 +97,10 @@ function numberFormatNegat(num, digits = 2){
 
     //coin info data
     if($('#ci_description').length){
-        var ci_description = coin_info[0].description.en != 'undefined' ? coin_info[0].description.en : '';
-        $('#ci_description').html(ci_description);
+        if(coin_info[0]){
+            var ci_description = coin_info[0].description.en != 'undefined' ? coin_info[0].description.en : '';
+            $('#ci_description').html(ci_description);
+        }
+        
     }
 })();

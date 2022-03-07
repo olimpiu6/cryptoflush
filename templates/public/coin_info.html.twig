@@ -145,7 +145,7 @@
 
     <script>
         var cr_market_data = {{ market_data.jsonData | json_encode() | raw }};
-        var cr_chart_data = {{ chart_data.jsonData | json_encode() | raw }};
+        var cr_chart_data = {{ chart_data.jsonData | raw }};
         var coin_info = [{{ coin_info.jsonData | json_encode() | raw }}];
     </script>
     
